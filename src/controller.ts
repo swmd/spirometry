@@ -7,13 +7,12 @@ export function storeReading(
   patient_id: number
 ): void {
   // check duplicate input
-  const exist = Readings.some(
-    (reading) =>
-      reading.created_at.startOf("day") ===
-      DateTime.fromISO(created_at).startOf("day")
+  const exist = Readings.some((reading) =>
+    reading.created_at.equals(DateTime.fromISO(created_at))
   );
   if (exist) {
     console.warn(`Duplicate input: (${value}, ${created_at}, ${patient_id})`);
+    return;
   }
 
   for (var position = 0; position < Readings.length; position++) {

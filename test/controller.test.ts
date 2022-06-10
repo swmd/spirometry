@@ -20,6 +20,11 @@ const TestData = [
   },
   {
     value: 80,
+    created_at: "2022-04-21",
+    patient_id: 1,
+  },
+  {
+    value: 80,
     created_at: "2022-06-10",
     patient_id: 1,
   },
@@ -55,11 +60,20 @@ describe("storeReading function", () => {
     );
   });
 
-  it("should set the manual review flag if the value is 10%+ greater than the average of the past month", () => {
+  it("should not add a duplicate reading", () => {
     storeReading(
       TestData[3].value,
       TestData[3].created_at,
       TestData[3].patient_id
+    );
+    expect(Readings.length).toBe(3);
+  });
+
+  it("should set the manual review flag if the value is 10%+ greater than the average of the past month", () => {
+    storeReading(
+      TestData[4].value,
+      TestData[4].created_at,
+      TestData[4].patient_id
     );
     expect(Readings[1].reviewFlag).toBe(true);
   });
